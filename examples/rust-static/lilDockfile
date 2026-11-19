@@ -1,0 +1,4 @@
+WORKDIR /app
+COPY main.rs .
+RUN rustc -C target-feature=+crt-static main.rs -o hi && rm main.rs
+CMD ["/app/hi"]

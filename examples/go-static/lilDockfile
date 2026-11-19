@@ -1,0 +1,5 @@
+WORKDIR /app
+COPY main.go go.mod ./
+ENV CGO_ENABLED=0
+RUN go build -o hi . && rm main.go go.mod
+CMD ["/app/hi"]

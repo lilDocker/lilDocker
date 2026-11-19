@@ -1,0 +1,9 @@
+FROM scratch AS build
+WORKDIR /src
+COPY . .
+ENV CGO_ENABLED=0
+RUN go build -o app .
+
+FROM scratch
+COPY --from=build /src/app /app
+ENTRYPOINT ["/app"]

@@ -1,0 +1,4 @@
+WORKDIR /app
+COPY main.rs .
+RUN rustc main.rs -o hi
+CMD ./hi

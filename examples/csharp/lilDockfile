@@ -1,0 +1,4 @@
+WORKDIR /app
+COPY Program.cs app.csproj ./
+RUN dotnet build -c Release -o out
+CMD dotnet out/app.dll

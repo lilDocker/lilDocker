@@ -1,0 +1,4 @@
+WORKDIR /app
+COPY main.cpp .
+RUN g++ -std=c++17 main.cpp -o hi
+CMD ./hi

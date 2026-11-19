@@ -1,0 +1,5 @@
+WORKDIR /app
+COPY Cargo.toml .
+COPY src ./src
+RUN cargo build --release --offline
+CMD ./target/release/hi
