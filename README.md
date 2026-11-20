@@ -1,7 +1,9 @@
 <p align="center">
-   <a>
-       <img alt="lilDocker logo" src="assets/lilDocker.png" width="150">
-  </a>
+  <img alt="lilDocker logo" src="assets/lilDocker.png" width="720">
+</p>
+
+<p align="center">
+  <b>lilDocker</b> a small Docker style container tool, written in Go
 </p>
 
 <p align="center">
@@ -27,7 +29,8 @@
 11. [Isolation](#isolation)
 12. [Compared With Docker](#compared-with-docker)
 13. [Where Things Are Stored](#where-things-are-stored)
-14. [Troubleshooting](#troubleshooting)
+14. [Environment Variables](#environment-variables)
+15. [Troubleshooting](#troubleshooting)
 
 <br/>
 
@@ -153,6 +156,7 @@ Run `lildocker <command> --help` for the options of any command.
 | `system df` | Disk usage of images, containers and volumes |
 | `system prune [-a] [--volumes] [-f]` | Remove stopped containers, and optionally unused images and volumes |
 | `info` | Counts, storage path and platform |
+| `logo [--color]` | Show the logo |
 | `version` | Version information |
 
 ### Docker-style groups
@@ -424,7 +428,17 @@ volumes/<name>/
 
 <br/>
 
+## Environment Variables
 
+| Variable | Description |
+|----------|-------------|
+| `LILDOCKER_HOME` | Where images, containers and volumes are stored (default `~/.lildocker`) |
+| `LILDOCKER_NO_LOGO` | Set to anything to hide the logo shown when you run `lildocker` with no arguments |
+| `NO_COLOR` | Draw the logo without colour |
+
+The logo is the same ASCII picture every time, built into the program, so it works from any folder. It only appears in a real terminal, never in pipes or scripts, and it shrinks to fit narrow windows.
+
+<br/>
 
 Run the tests from the `app` folder:
 

@@ -23,10 +23,12 @@ vendor/
 # ---------------------------
 # Generated container data (IMPORTANT)
 # ---------------------------
-images/
-containers/
-registry/
-temp/
+# anchored to the app folder, so source packages such as
+# app/image and app/registry are never matched
+/images/
+/containers/
+/volumes/
+/temp/
 
 # ---------------------------
 # Logs

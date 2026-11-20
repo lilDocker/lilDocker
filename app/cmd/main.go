@@ -95,6 +95,7 @@ func init() {
 	reg("import", "import <file|-> <image[:tag]>", "Create an image from a filesystem tarball", cmdImport)
 	reg("pull", "pull <image[:tag]>", "Download an image from a registry", cmdPull)
 	reg("prune", "prune [-f]", "Remove all stopped containers", func(a []string) int { return cmdContainerPrune(a) })
+	reg("logo", "logo [--color]", "Show the lilDocker logo", cmdLogo)
 	reg("info", "info", "Show system information", cmdInfo)
 	reg("version", "version", "Show the version", cmdVersion)
 }
@@ -136,6 +137,7 @@ func main() {
 	signal.Ignore(syscall.SIGPIPE)
 	args := os.Args[1:]
 	if len(args) == 0 {
+		splash()
 		printHelp()
 		return
 	}
