@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="lilDocker logo" src="assets/lilDocker.png" width="720">
+  <img alt="lilDocker logo" src="assets/lilDocker.png" width="150">
 </p>
 
 <p align="center">
