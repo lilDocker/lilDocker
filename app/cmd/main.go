@@ -101,7 +101,7 @@ func init() {
 }
 
 func printHelp() {
-	fmt.Printf("lilDocker %s, a small container tool\n\nUsage:  lildocker <command> [options]\n\nCommands:\n", version)
+	fmt.Printf("lilDocker %s, a small container tool\n\nUsage:  lilDocker <command> [options]\n\nCommands:\n", version)
 	tw := tabwriter.NewWriter(os.Stdout, 0, 8, 3, ' ', 0)
 	for _, n := range order {
 		fmt.Fprintf(tw, "  %s\t%s\n", n, commands[n].desc)
@@ -117,13 +117,13 @@ func printHelp() {
 		fmt.Fprintf(tw, "  %s\t%s\n", g, groups[g])
 	}
 	tw.Flush()
-	fmt.Println("\nRun 'lildocker <command> --help' for details on a command.")
+	fmt.Println("\nRun 'lilDocker <command> --help' for details on a command.")
 	fmt.Println("Data lives in ~/.lildocker, or in $LILDOCKER_HOME if set.")
 }
 
 func commandHelp(name string, fs *flag.FlagSet) {
 	c := commands[name]
-	fmt.Printf("Usage:  lildocker %s\n\n%s\n", c.usage, c.desc)
+	fmt.Printf("Usage:  lilDocker %s\n\n%s\n", c.usage, c.desc)
 	n := 0
 	fs.VisitAll(func(*flag.Flag) { n++ })
 	if n > 0 {
@@ -168,10 +168,10 @@ func main() {
 		os.Exit(c.run(rest))
 	}
 	if reason, ok := unsupported[name]; ok {
-		fmt.Fprintf(os.Stderr, "lildocker: %q is not supported: %s\n", name, reason)
+		fmt.Fprintf(os.Stderr, "lilDocker: %q is not supported: %s\n", name, reason)
 		os.Exit(1)
 	}
-	fmt.Fprintf(os.Stderr, "lildocker: unknown command %q\nRun 'lildocker --help' for the list of commands.\n", name)
+	fmt.Fprintf(os.Stderr, "lilDocker: unknown command %q\nRun 'lilDocker --help' for the list of commands.\n", name)
 	os.Exit(1)
 }
 
@@ -203,7 +203,7 @@ func runGroup(group string, args []string) int {
 	}
 	target, ok := groupMap[group][sub]
 	if !ok {
-		fmt.Printf("Usage:  lildocker %s <command>\n\n%s\n\nCommands:\n", group, groups[group])
+		fmt.Printf("Usage:  lilDocker %s <command>\n\n%s\n\nCommands:\n", group, groups[group])
 		var subs []string
 		for s := range groupMap[group] {
 			subs = append(subs, s)

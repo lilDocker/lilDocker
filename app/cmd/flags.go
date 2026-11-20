@@ -123,19 +123,19 @@ func parse(cmd string, fs *flag.FlagSet, args []string) (code int, done bool) {
 		commandHelp(cmd, fs)
 		return 0, true
 	}
-	fmt.Fprintf(os.Stderr, "lildocker: %v\nSee 'lildocker %s --help'.\n", err, cmd)
+	fmt.Fprintf(os.Stderr, "lilDocker: %v\nSee 'lilDocker %s --help'.\n", err, cmd)
 	return 1, true
 }
 
 func usageErr(cmd string) int {
 	if c, ok := commands[cmd]; ok {
-		fmt.Fprintf(os.Stderr, "Usage:  lildocker %s\n\nSee 'lildocker %s --help'.\n", c.usage, cmd)
+		fmt.Fprintf(os.Stderr, "Usage:  lilDocker %s\n\nSee 'lilDocker %s --help'.\n", c.usage, cmd)
 	}
 	return 1
 }
 
 func fail(err error) int {
-	fmt.Fprintln(os.Stderr, "lildocker:", err)
+	fmt.Fprintln(os.Stderr, "lilDocker:", err)
 	return 1
 }
 

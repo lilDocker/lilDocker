@@ -47,7 +47,7 @@ func cmdSystem(sub string, args []string) int {
 	case "prune":
 		return cmdSystemPrune(args)
 	}
-	fmt.Println("Usage:  lildocker system <command>\n\nCommands:\n  df      show disk usage\n  info    show system information\n  prune   remove stopped containers, unused volumes (and images with -a)")
+	fmt.Println("Usage:  lilDocker system <command>\n\nCommands:\n  df      show disk usage\n  info    show system information\n  prune   remove stopped containers, unused volumes (and images with -a)")
 	return 1
 }
 
@@ -209,6 +209,6 @@ func cmdVolume(sub string, args []string) int {
 }
 
 func volumeUsage() int {
-	fmt.Println("Usage:  lildocker volume <command>\n\nCommands:\n  create [name]   create a volume\n  ls [-q]         list volumes\n  rm [-f] <name>  remove volumes\n  inspect <name>  show a volume\n  prune [-f]      remove unused volumes")
+	fmt.Println("Usage:  lilDocker volume <command>\n\nCommands:\n  create [name]   create a volume\n  ls [-q]         list volumes\n  rm [-f] <name>  remove volumes\n  inspect <name>  show a volume\n  prune [-f]      remove unused volumes")
 	return 1
 }

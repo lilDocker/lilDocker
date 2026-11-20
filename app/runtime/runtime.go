@@ -326,7 +326,7 @@ func (c *Container) execute(stdout io.Writer, stdin io.Reader) (int, error) {
 		out = io.MultiWriter(quiet{stdout}, logFile)
 	}
 	fail := func(err error) (int, error) {
-		fmt.Fprintln(logFile, "lildocker:", err)
+		fmt.Fprintln(logFile, "lilDocker:", err)
 		c.finish(127)
 		return 127, err
 	}
@@ -359,7 +359,7 @@ func (c *Container) execute(stdout io.Writer, stdin io.Reader) (int, error) {
 	for {
 		code, runErr = c.runOnce(out, stdin, &current)
 		if runErr != nil {
-			fmt.Fprintln(logFile, "lildocker:", runErr)
+			fmt.Fprintln(logFile, "lilDocker:", runErr)
 			break
 		}
 		if !c.shouldRestart(code, interrupted.Load()) {

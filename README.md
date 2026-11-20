@@ -16,7 +16,7 @@
 
 ## Table of Contents
 
-1. [What is lilDocker?](#what-is-lildocker)
+1. [What is lilDocker?](#what-is-lilDocker)
 2. [Before You Start](#before-you-start)
 3. [Installation](#installation)
 4. [Your First Container](#your-first-container)
@@ -61,18 +61,42 @@ You need:
 
 ## Installation
 
-```bash
-# 1. Go to the app folder
-cd app
+One script builds lilDocker and puts it on your `PATH`, so you can type `lilDocker` from any folder.
 
-# 2. Build the binary
-go build -o lildocker ./cmd
+**Windows** (Command Prompt or PowerShell, from the lilDocker folder)
 
-# 3. Check it works
-./lildocker version
+```
+install.bat
 ```
 
-On Windows the output is `lildocker.exe` and you run it as `.\lildocker.exe`. To use it from anywhere, put the binary in a folder on your `PATH`.
+Then **close the window and open a new one**, and run:
+
+```
+lilDocker version
+```
+
+**Linux and macOS**
+
+```bash
+./install.sh
+lilDocker version
+```
+
+If the script prints an `export PATH=...` line, run it (or add it to your shell profile).
+
+<br/>
+
+**Building by hand instead**
+
+```bash
+cd app
+go build -o lilDocker ./cmd          # Linux / macOS
+go build -o lilDocker.exe .\cmd      # Windows
+```
+
+On Windows the file must end in `.exe`. Run it as `.\lilDocker.exe` in PowerShell, or `lilDocker.exe` in Command Prompt, because Command Prompt does not understand `./`. In this guide `lilDocker` means plain `lilDocker` once installed.
+
+To run the tests, use `go test ./...` from the `app` folder.
 
 <br/>
 
@@ -82,21 +106,21 @@ The repo ships with a small Node sample.
 
 ```bash
 # build an image called demo from the sample folder
-./lildocker build -t demo sample-node
+lilDocker build -t demo sample-node
 
 # run it
-./lildocker run demo
+lilDocker run demo
 
 # run it in the background, with a name
-./lildocker run -d --name web demo
+lilDocker run -d --name web demo
 
 # see what is running, then read its output
-./lildocker ps
-./lildocker logs web
+lilDocker ps
+lilDocker logs web
 
 # stop it and clean up
-./lildocker stop web
-./lildocker rm web
+lilDocker stop web
+lilDocker rm web
 ```
 
 The older short form `build <path> <image>` still works too.
@@ -105,7 +129,7 @@ The older short form `build <path> <image>` still works too.
 
 ## Commands
 
-Run `lildocker <command> --help` for the options of any command.
+Run `lilDocker <command> --help` for the options of any command.
 
 ### Containers
 
@@ -194,7 +218,7 @@ The longer names work as well: `container ls`, `container rm`, `image ls`, `imag
 Anything after the image name replaces the image's `CMD`:
 
 ```bash
-./lildocker run demo node -v
+lilDocker run demo node -v
 ```
 
 <br/>
@@ -265,17 +289,17 @@ That is `examples/go-multistage`. `build --target build` stops after the first s
 
 ```bash
 # a folder from your machine
-./lildocker run -v ./notes:/data demo
+lilDocker run -v ./notes:/data demo
 
 # a named volume, created on first use and kept after the container is gone
-./lildocker run -v mydata:/data demo
-./lildocker volume ls
+lilDocker run -v mydata:/data demo
+lilDocker volume ls
 
 # read-only (enforced with --isolate)
-sudo ./lildocker run --rm --isolate -v ./config:/etc/app:ro hello-rust
+sudo lilDocker run --rm --isolate -v ./config:/etc/app:ro hello-rust
 
 # publish a port: your 8080 reaches the program listening on 3000
-./lildocker run -d -p 8080:3000 demo
+lilDocker run -d -p 8080:3000 demo
 ```
 
 How they work:
@@ -286,9 +310,9 @@ How they work:
 ### Restart policies
 
 ```bash
-./lildocker run -d --restart on-failure:3 demo
-./lildocker run -d --restart unless-stopped demo
-./lildocker update --restart no web
+lilDocker run -d --restart on-failure:3 demo
+lilDocker run -d --restart unless-stopped demo
+lilDocker update --restart no web
 ```
 
 `stop` always wins: a stopped container is not restarted.
@@ -298,20 +322,20 @@ How they work:
 ## Images: Tags, Save, Load, Pull
 
 ```bash
-./lildocker build -t app:1.0 -t app:latest .
-./lildocker tag app:1.0 team/app:stable
-./lildocker save -o app.tar app:1.0        # move it to another machine
-./lildocker load -i app.tar
-./lildocker export -o fs.tar web           # a container's files
-./lildocker import fs.tar app:restored
-./lildocker commit web app:snapshot
+lilDocker build -t app:1.0 -t app:latest .
+lilDocker tag app:1.0 team/app:stable
+lilDocker save -o app.tar app:1.0        # move it to another machine
+lilDocker load -i app.tar
+lilDocker export -o fs.tar web           # a container's files
+lilDocker import fs.tar app:restored
+lilDocker commit web app:snapshot
 ```
 
 ### Pulling
 
 ```bash
-./lildocker pull alpine
-sudo ./lildocker run --rm alpine echo hello
+lilDocker pull alpine
+sudo lilDocker run --rm alpine echo hello
 ```
 
 `pull` speaks the registry v2 protocol (Docker Hub by default, or `host/name`). `run` and `FROM` pull automatically when an image is missing. Things to know:
@@ -325,13 +349,13 @@ sudo ./lildocker run --rm alpine echo hello
 
 ## Supported Languages
 
-lilDocker does not bundle any language. `RUN` and `CMD` use the tools installed on your machine, so **if a language has a command-line toolchain, it works**. Compiled languages are built during `lildocker build`, and the finished program is what gets packed into the image.
+lilDocker does not bundle any language. `RUN` and `CMD` use the tools installed on your machine, so **if a language has a command-line toolchain, it works**. Compiled languages are built during `lilDocker build`, and the finished program is what gets packed into the image.
 
 Every folder in `examples/` is a ready-to-run lilDockfile:
 
 ```bash
-./lildocker build -t hello-cpp ../examples/cpp
-./lildocker run --rm hello-cpp
+lilDocker build -t hello-cpp ../examples/cpp
+lilDocker run --rm hello-cpp
 ```
 
 ### Tested
@@ -366,8 +390,8 @@ TypeScript (via Bun or Deno), Kotlin, Swift, Dart, Lua, R, Elixir, Haskell, Zig 
 The `*-static` examples (`c-static`, `cpp-static`, `rust-static`, `go-static`) and `go-multistage` build a fully static binary. Those images need nothing from the host, so they run under [`--isolate`](#isolation):
 
 ```bash
-./lildocker build -t hello-rust ../examples/rust-static
-sudo ./lildocker run --rm --isolate hello-rust
+lilDocker build -t hello-rust ../examples/rust-static
+sudo lilDocker run --rm --isolate hello-rust
 ```
 
 Interpreted languages and Java can only be self-contained by pulling a base image that carries the runtime (see [Pulling](#pulling)).
@@ -433,18 +457,10 @@ volumes/<name>/
 | Variable | Description |
 |----------|-------------|
 | `LILDOCKER_HOME` | Where images, containers and volumes are stored (default `~/.lildocker`) |
-| `LILDOCKER_NO_LOGO` | Set to anything to hide the logo shown when you run `lildocker` with no arguments |
+| `LILDOCKER_NO_LOGO` | Set to anything to hide the logo shown when you run `lilDocker` with no arguments |
 | `NO_COLOR` | Draw the logo without colour |
 
 The logo is the same ASCII picture every time, built into the program, so it works from any folder. It only appears in a real terminal, never in pipes or scripts, and it shrinks to fit narrow windows.
-
-<br/>
-
-Run the tests from the `app` folder:
-
-```bash
-go test ./...
-```
 
 <br/>
 
@@ -453,17 +469,20 @@ go test ./...
 | Problem | Solution |
 |---------|----------|
 | `fork/exec ...: no such file or directory` | The command isn't installed on your machine, or isn't on your `PATH`. Install the language toolchain |
-| `image has no command, pass one to run` | The image has no `CMD` or `ENTRYPOINT`. Add one, or run `lildocker run <image> <command>` |
+| `image has no command, pass one to run` | The image has no `CMD` or `ENTRYPOINT`. Add one, or run `lilDocker run <image> <command>` |
 | `unknown instruction` | Check the spelling against the instruction table |
-| `image not found: x (pulling it failed ...)` | Nothing local matches. Run `./lildocker images`, or check your network if you meant to pull |
-| `the name "x" is already in use` | Pick another `--name`, or `./lildocker rm x` |
-| `x is running, stop it first or use -f` | `./lildocker stop x`, or `rm -f x` |
+| `image not found: x (pulling it failed ...)` | Nothing local matches. Run `lilDocker images`, or check your network if you meant to pull |
+| `the name "x" is already in use` | Pick another `--name`, or `lilDocker rm x` |
+| `x is running, stop it first or use -f` | `lilDocker stop x`, or `rm -f x` |
 | `x is used by ...` when removing an image | Remove the containers that use it first, or use `rmi -f` |
 | `isolation needs linux and root` | `--isolate` only works on Linux. Run with `sudo` |
 | `not found inside the container` under `--isolate` | The program isn't in the image. Use a static binary, or pull a base image |
 | `is a linux image and can only run on linux` | Pulled images are Linux root filesystems. Use Linux, or build from `scratch` |
 | `publishing 8080:80: address already in use` | Pick another host port |
 | `linking /data: ... developer mode` (Windows) | Volumes use symlinks. Turn on Developer Mode or use an admin shell |
-| A background container exits right away | Run `./lildocker logs <name>` to see why |
+| A background container exits right away | Run `lilDocker logs <name>` to see why |
 | `still has mounted folders, refusing to delete it` | A crashed `--isolate` run left a mount. Unmount it, or reboot, then `rm` again |
+| Windows: `'lilDocker' is not recognized` | Run `install.bat`, then open a **new** terminal. Typing the name only works from a folder that has `lilDocker.exe` or after it is on `PATH` |
+| Windows: `'.' is not recognized` | Command Prompt has no `./`. Use `lilDocker ...` after installing, or `.\lilDocker.exe ...` |
+| `package lildocker/registry is not in std` | The `app\registry` folder is missing from your copy. Restore it from the zip, and use the `app/.gitignore` from the zip so git stops ignoring it |
 | Windows: `RUN` fails on quotes | `RUN` goes through `cmd /C` there. Keep commands simple or use a script file |

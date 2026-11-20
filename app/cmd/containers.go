@@ -142,7 +142,7 @@ func cmdStart(args []string) int {
 	for _, ref := range fs.Args() {
 		exit, err := runtime.Start(ref, attach, os.Stdout)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "lildocker:", err)
+			fmt.Fprintln(os.Stderr, "lilDocker:", err)
 			code = 1
 			continue
 		}
@@ -158,7 +158,7 @@ func eachContainer(cmd string, args []string, fn func(string) error) int {
 	code := 0
 	for _, ref := range args {
 		if err := fn(ref); err != nil {
-			fmt.Fprintln(os.Stderr, "lildocker:", err)
+			fmt.Fprintln(os.Stderr, "lilDocker:", err)
 			code = 1
 			continue
 		}
@@ -432,7 +432,7 @@ func cmdInspect(args []string) int {
 		} else if v, err := runtime.InspectVolume(ref); err == nil {
 			objs = append(objs, v)
 		} else {
-			fmt.Fprintf(os.Stderr, "lildocker: no such image, container or volume: %s\n", ref)
+			fmt.Fprintf(os.Stderr, "lilDocker: no such image, container or volume: %s\n", ref)
 			code = 1
 		}
 	}
@@ -495,7 +495,7 @@ func cmdWait(args []string) int {
 	for _, ref := range args {
 		exit, err := runtime.Wait(ref)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "lildocker:", err)
+			fmt.Fprintln(os.Stderr, "lilDocker:", err)
 			code = 1
 			continue
 		}
@@ -529,7 +529,7 @@ func cmdCp(args []string) int {
 			return fail(err)
 		}
 	default:
-		fmt.Fprintln(os.Stderr, "lildocker: one side of cp must be <container>:<path>")
+		fmt.Fprintln(os.Stderr, "lilDocker: one side of cp must be <container>:<path>")
 		return 1
 	}
 	return 0

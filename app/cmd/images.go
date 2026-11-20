@@ -30,7 +30,7 @@ func cmdBuild(args []string) int {
 		pos = pos[:1]
 	}
 	if len(pos) != 1 || len(tags) == 0 {
-		fmt.Fprintln(os.Stderr, "Usage:  lildocker build -t <name[:tag]> <path>\n        lildocker build <path> <name[:tag]>")
+		fmt.Fprintln(os.Stderr, "Usage:  lilDocker build -t <name[:tag]> <path>\n        lilDocker build <path> <name[:tag]>")
 		return 1
 	}
 	vars := map[string]string{}
@@ -114,18 +114,18 @@ func cmdRmi(args []string) int {
 	for _, ref := range fs.Args() {
 		m, err := image.Load(ref)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "lildocker:", err)
+			fmt.Fprintln(os.Stderr, "lilDocker:", err)
 			code = 1
 			continue
 		}
 		if users := runtime.UsedBy(m.ID); len(users) > 0 && !force && lastTag(m, ref) {
-			fmt.Fprintf(os.Stderr, "lildocker: %s is used by %s, remove them first or use -f\n", ref, strings.Join(users, ", "))
+			fmt.Fprintf(os.Stderr, "lilDocker: %s is used by %s, remove them first or use -f\n", ref, strings.Join(users, ", "))
 			code = 1
 			continue
 		}
 		gone, err := image.Remove(ref)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "lildocker:", err)
+			fmt.Fprintln(os.Stderr, "lilDocker:", err)
 			code = 1
 			continue
 		}
